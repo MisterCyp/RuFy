@@ -1,0 +1,61 @@
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+body {
+  padding-top: 0px;
+}
+
+.navbar-default {
+  background-color: #f8f8f8;
+  border-color: #e7e7e7;
+}
+
+.menu-app {
+
+  position: relative;
+  min-height: 50px;
+  #max-width: 400px;
+  margin : auto ;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
+
+.inline-form input {
+  display: inline-block;
+  width: 150px;
+}
+
+
+#btn-search{
+	margin-left: 10px;
+    margin-right: 10px;
+	border-radius: 2px;
+}
+
+#btns-categories .btn{
+    margin-bottom:5px;
+}
+ [class*="col-"], footer {
+/*
+  background-color: lightgreen;
+  border: 2px solid black;
+  border-radius: 6px; 
+  */
+  line-height: 40px ;
+  #text-align: center;
+} 
+
+ 
+.alert-fixed-bottom {
+  position: fixed;
+  width: 30%;
+  z-index: @zindex-alert-fixed;
+  border-radius: 5px;
+  margin: 15px;
+  bottom: 0;
+ }
+ 

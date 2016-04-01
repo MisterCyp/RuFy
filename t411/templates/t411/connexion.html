@@ -1,0 +1,18 @@
+﻿{% extends "base.html" %}
+{% block content %}
+ <h1>Se connecter</h1>
+
+{% if error %}
+<p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
+{% endif %}
+
+{% if user.is_authenticated %}
+Vous êtes connecté, {{ user.username }} !
+{% else %}
+<form method="post" action="{% url "t411:connexion" %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Se connecter" />
+</form>
+{% endif %}
+{% endblock %}

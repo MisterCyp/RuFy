@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+ <h3>Détails du torrent : {{ detail.name }} </h3>
+ <button class="btn btn-primary" id="btn-download" type="button" value="{{ detail.id}}">Télécharger</button>
+<p> 
+    <center><small>{{ detail.description|safe }}</small></center>
+</p>
+
+</div>
+	
+    <div class="alert alert-success alert-dismissable alert-fixed-bottom" style="display: none">
+    <button type="button" class="close">×</button>
+      <h4>Ajout réussi !</h4> Le téléchargement du film a commencé !
+  </div>
+  
+  
+  <div class="alert alert-danger alert-dismissable alert-fixed-bottom" style="display: none">
+    <button type="button" class="close">×</button>
+      <h4>Échec de l'ajout !</h4> Vérifiez le dossier d'enregistrement et les droits d'accès associés !
+  </div>
+{% endblock %}

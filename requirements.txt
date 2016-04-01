@@ -1,0 +1,5 @@
+django==1.9.4
+requests==1.2.3
+django-bootstrap3
+django-js-reverse >=0.7.0
+gunicorn

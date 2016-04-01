@@ -1,0 +1,90 @@
+﻿{% load static %}
+{% load bootstrap3 %}
+{% load t411_extras %}
+{# Load CSS and JavaScript #}
+
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <title> {% block title %}RuFy{% endblock %}</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="{% static "js/search.js" %}"></script>
+  <script src="{% static 'django_js_reverse/js/reverse.js' %}"></script>
+  <link href="{% static "css/rufy.css" %}" rel="stylesheet">
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% block head %}
+  {% endblock %}
+  </head>
+  <body>
+  <!-- Menu TOP liens vers les différentes applications -->
+		<div class="navbar navbar-default navbar-static-top" >
+		  <div class="container">
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="{% url 't411:home' %}">RuFy</a>
+			</div>
+			<ul class="nav navbar-nav">
+            {% block navServeur %}
+			  <li><a href="/rutorrent">Rutorrent</a></li>
+			  <li><a href="/cakebox">Cakebox</a></li>
+			  <li><a href="/sickrage">SickRage</a></li>
+			  <li><a href="#">A Propos</a></li>
+            {% endblock %}
+			</ul>
+		 
+          <ul class="nav navbar-nav navbar-right">
+          
+            {% block navConnexion %}
+			  {% if user.is_authenticated %}
+                <li><a>Up : {{ utilisateur.uploaded|taille }}</a> </li>
+                <li><a>Down : {{ utilisateur.downloaded|taille }}</a> </li>
+                <li><a>Ratio : {{ utilisateur.uploaded|div:utilisateur.downloaded }}</a> </li>
+                <li class="dropdown">
+                  <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuration <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url 't411:configT411' %}">{% bootstrap_icon "user" %} Compte T411</a></li>
+                    <li><a href="{% url "t411:configRut" %}">{% bootstrap_icon "download-alt" %} RuTorrent</a></li>
+                  </ul>
+                </li>
+ 
+                    <li><a href="{% url "t411:deconnexion" %}">Déconnexion</a></li>
+                    {% else %}
+                    <li><a href="{% url "t411:connexion" %}">Connexion</a></li>
+               {% endif %}
+            {% endblock %}
+			</ul>
+             </div>
+</div>
+	<!-- FIN Menu TOP liens vers les différentes applications -->
+    <div class="container">
+	
+	
+	<!-- Menu de navigation de l'application -->
+		<div class="navbar navbar-default menu-app">
+			  <ul class="nav navbar-nav">
+              {% block nav %}
+				<li class=""> <a href="{% url "t411:top_torrents" 100 %}">{% bootstrap_icon "star" %} Top100</a> </li>
+                <li class=""> <a href="{% url "t411:top_torrents" "month" %}">{% bootstrap_icon "star" %} TopMonth</a> </li>
+                <li class=""> <a href="{% url "t411:top_torrents" "week" %}">{% bootstrap_icon "star" %} TopWeek</a> </li>
+                <li class=""> <a href="{% url "t411:top_torrents" "today" %}">{% bootstrap_icon "star" %} TopDay</a> </li>
+			  {% endblock %}
+              </ul>
+
+			  
+			<form class="navbar-form navbar-right inline-form">
+            
+			<input  id="champs" class="input-sm form-control" size="35" placeholder="Recherche d'un torrent ..." >
+			<button type="button" class="btn btn-primary btn-sm" id="btn-search">{% bootstrap_icon "search" %} Chercher</button>
+            
+            </form>
+		  
+    </form>
+		</div>
+    <!-- FIN Menu de navigation de l'application -->
+        <section id="content">
+       {% block content %}{% endblock %}
+   </section>
+  
+  </body>
+</html>
