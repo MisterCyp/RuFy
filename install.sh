@@ -1,6 +1,5 @@
 ﻿#!/usr/bin/bash
 
-
 INSTALLDIR=$(readlink -f $(dirname $0))
 USER=rufy
 GROUP=web
