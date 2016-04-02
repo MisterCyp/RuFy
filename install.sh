@@ -1,4 +1,8 @@
 ﻿#!/usr/bin/bash
+
+exec 1>Sortie.log
+exec 2>Crash.log
+
 INSTALLDIR=$(readlink -f $(dirname $0))
 USER=rufy
 GROUP=web
