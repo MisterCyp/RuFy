@@ -104,7 +104,7 @@ echo "
 Creation du dossier virtualvenv dans $VIRTUALDIR 
 ####################################################
 "
-sudo su $USER -c "virtualenv -p /usr/bin/python2.7 $VIRTUALDIR"
+su $USER -c "virtualenv -p /usr/bin/python2.7 $VIRTUALDIR"
 
 
 echo "

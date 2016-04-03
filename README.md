@@ -29,7 +29,7 @@ server {
     location ^~/rufy/static {
         satisfy any;
 	    allow all;
-        alias /var/www/RuFy/static/
+        alias /var/www/RuFy/static/;
     }
     
     location ^~/rufy/media {
