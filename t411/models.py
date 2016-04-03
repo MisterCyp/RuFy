@@ -10,6 +10,10 @@ import json
 import requests
 from requests.auth import HTTPDigestAuth
 
+class Menu(models.Model):
+    nom = models.CharField(max_length=15)
+    lien = models.CharField(max_length=50)
+    
 class Profil(models.Model):
     user = models.OneToOneField(User)  # La liaison OneToOne vers le modèle User
     dossier = models.CharField(max_length=200,null=True, blank = True)
@@ -20,10 +24,12 @@ class Profil(models.Model):
     downloaded = models.IntegerField(null=True, default=0)
     uploaded = models.IntegerField(null=True, default=0)
     
-
+    menus = models.ManyToManyField(Menu)
+    
     def __str__(self):
         return "Profil de {0}".format(self.user.username)
 
+    
 HTTP_OK = 200
 API_URL = 'http://api.t411.ch/%s'
 
