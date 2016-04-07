@@ -180,12 +180,11 @@ def download(request,id_torrent):
         return HttpResponse(fichier['error'])
 
     nomFichier = fichier.headers['Content-Disposition'].split('=')[1][1:-1]
-    nomFichier = nomFichier.decode('windows-1252')
+    nomFichier = nomFichier.decode('cp1252')
     
     chemin = dossier+nomFichier 
     chemin = chemin.encode('utf8')
     
-    #chemin = "C:\\Users\\cyprien\\Downloads\\torrents\\"+nomFichier
         
     with open(chemin, 'wb') as fd:
         for chunk in fichier.iter_content():

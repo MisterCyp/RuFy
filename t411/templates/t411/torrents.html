@@ -25,7 +25,8 @@
                  <tr> 
                  <td>Torrent</td> 
                  <td>Age</td> 
-                 <td>Taille</td> 
+                 <td>Taille</td>
+                 <td>Complété</td> 
                  <td>Seeders</td> 
                  <td>Leechers</td>
                  </tr> 
@@ -33,9 +34,10 @@
          <tbody> 
             {% for torrent in torrents  %}
                  <tr> 
-                 <td style="width:70%;"><a href="{% url "t411:detail_torrent" torrent.id %}">{{ torrent.name }}</a></td> 
+                 <td style="width:65%;"><a href="{% url "t411:detail_torrent" torrent.id %}">{{ torrent.name }}</a></td> 
                  <td style="width:10%;">{{ torrent.added }}</td> 
                  <td style="width:10%;">{{ torrent.size|taille }}</td> 
+                 <td style="width:5%;">{{ torrent.times_completed }}</td>
                  <td style="width:5%;">{{ torrent.seeders }}</td> 
                  <td style="width:5%;">{{ torrent.leechers }}</td> 
                  </tr> 
