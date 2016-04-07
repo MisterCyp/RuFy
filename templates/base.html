@@ -2,7 +2,6 @@
 {% load bootstrap3 %}
 {% load t411_extras %}
 {# Load CSS and JavaScript #}
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -26,10 +25,16 @@
 			</div>
 			<ul class="nav navbar-nav">
             {% block navServeur %}
-			  <li><a href="/rutorrent">Rutorrent</a></li>
-			  <li><a href="/cakebox">Cakebox</a></li>
-			  <li><a href="/sickrage">SickRage</a></li>
-			  <li><a href="#">A Propos</a></li>
+                {% if user.is_authenticated %}
+                    {% for menu in utilisateur.menu_set.all %}
+                        <li><a href="{{ menu.lien }}"> {{ menu.nom }} </a></li>
+                    {% empty %}
+                        <li><a href="{% url "t411:configMenu" %}">Configurer le Menu</a></li>
+                    {% endfor %}
+                {% else %}
+                    <!--<li><a href="{% url "t411:connexion" %}">Connexion</a></li>-->
+               {% endif %}
+			  
             {% endblock %}
 			</ul>
 		 
@@ -45,6 +50,7 @@
                   <ul class="dropdown-menu">
                     <li><a href="{% url 't411:configT411' %}">{% bootstrap_icon "user" %} Compte T411</a></li>
                     <li><a href="{% url "t411:configRut" %}">{% bootstrap_icon "download-alt" %} RuTorrent</a></li>
+                    <li><a href="{% url "t411:configMenu" %}">{% bootstrap_icon "list" %} Menu</a></li>
                   </ul>
                 </li>
  

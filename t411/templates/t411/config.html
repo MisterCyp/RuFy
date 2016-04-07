@@ -3,10 +3,12 @@
 {% block nav %}
 				<li class=""> <a href="{% url "t411:configT411" %}">{% bootstrap_icon "user" %} Compte T411</a> </li>
                 <li class=""> <a href="{% url "t411:configRut" %}">{% bootstrap_icon "download-alt" %} RuTorrent </a> </li>
+                <li><a href="{% url "t411:configMenu" %}">{% bootstrap_icon "list" %} Menu</a></li>
 {% endblock %}
-{% block content %}
+{% block titre %}
  <h2> {{ titre }}</h2>
-
+{% endblock %}
+ {% block content %}
 {% if success %}
 <p> {{ configReussi }} </p>
 {% else %}

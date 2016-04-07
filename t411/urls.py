@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^deconnexion$', views.deconnexion, name='deconnexion'),
     url(r'^config/t411$', views.configT411, name='configT411'),
     url(r'^config/rutorrent$', views.configRut, name='configRut'),
+    url(r'^config/menu$', views.configMenu, name='configMenu'),
     url(r'^top/$', views.top_torrents, name='top_torrents'),
     url(r'^top/(?P<type_top>\w+)$', views.top_torrents, name='top_torrents'),
     url(r'^torrent/(?P<id_torrent>\d+)$', views.detail_torrent, name='detail_torrent'),

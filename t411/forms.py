@@ -1,8 +1,9 @@
 ﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django import forms
-from t411.models import Profil
+from t411.models import Profil, Menu
 from django.forms import ModelForm, TextInput
+
 
 class ConnexionForm(forms.Form):
     username = forms.CharField(label="Nom d'utilisateur", max_length=30)
@@ -26,4 +27,13 @@ class DossierForm(forms.ModelForm):
         fields = ('dossier',)
         widgets = {
             'dossier': TextInput(attrs={'size': 80}),
+        }
+        
+class MenuForm(forms.ModelForm):
+    class Meta:
+        model = Menu
+        fields = ('nom','lien')
+        widgets = {
+            'nom': TextInput(attrs={'size': 15}),
+            'lien': TextInput(attrs={'size': 25})
         }
