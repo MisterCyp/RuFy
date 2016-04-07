@@ -5,8 +5,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 
-from t411.forms import ConnexionForm, T411Form, DossierForm
-from t411.models import Profil,T411
+from t411.forms import ConnexionForm, T411Form, DossierForm, MenuForm
+from t411.models import Profil,T411, Menu
+
+from django.forms import modelformset_factory, inlineformset_factory
 
 import json
 import time, datetime
@@ -92,6 +94,25 @@ def configT411(request, error = False, erreur=""):
 
     return render(request, 't411/config.html', locals())
     
+@login_required   
+def configMenu(request, error = False, erreur=""):  
+    config = "t411:configMenu"
+    titre = " Configuration du Menu"
+    configReussi = "Les menus sont correctement configurés ! "
+    
+    t411, utilisateur = connexionT411(request)
+    success = False
+    
+    LiensFormSet = inlineformset_factory(Profil,Menu,form=MenuForm, extra = 1)
+    if request.method == "POST":
+        formsSet = LiensFormSet(request.POST, request.FILES,instance = utilisateur)
+        if formsSet.is_valid():
+            formsSet.save()
+            formsSet =  LiensFormSet(instance=utilisateur)
+    else:
+        formsSet =  LiensFormSet(instance=utilisateur)
+    return render(request, 't411/configMenu.html', locals())
+
 def deconnexion(request):
     logout(request)
     return redirect(reverse('t411:connexion'))
