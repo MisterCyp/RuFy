@@ -1,3 +1,7 @@
 /**/*/__pycache__
+config/
+log/
+venv/
 
+*.py[cod]
 db.sqlite3
