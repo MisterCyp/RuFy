@@ -4,3 +4,5 @@ venv/
 
 *.py[cod]
 db.sqlite3
+
+config/rufy_SUPERVISOR.conf

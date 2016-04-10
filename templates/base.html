@@ -42,6 +42,16 @@
           
             {% block navConnexion %}
 			  {% if user.is_authenticated %}
+                <li class="dropdown">
+                  <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Torrents <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li class=""> <a href="{% url "t411:top_torrents" 100 %}">{% bootstrap_icon "star" %} Top100</a> </li>
+                <li class=""> <a href="{% url "t411:top_torrents" "month" %}">{% bootstrap_icon "star" %} TopMonth</a> </li>
+                <li class=""> <a href="{% url "t411:top_torrents" "week" %}">{% bootstrap_icon "star" %} TopWeek</a> </li>
+                <li class=""> <a href="{% url "t411:top_torrents" "today" %}">{% bootstrap_icon "star" %} TopDay</a> </li>
+                <li class=""> <a href="{% url "t411:asearch"              %}">{% bootstrap_icon "search"  %} Recherche Précise</a> </li>
+                  </ul>
+                </li>
                 <li><a>Up : {{ utilisateur.uploaded|taille }}</a> </li>
                 <li><a>Down : {{ utilisateur.downloaded|taille }}</a> </li>
                 <li><a>Ratio : {{ utilisateur.uploaded|div:utilisateur.downloaded }}</a> </li>
