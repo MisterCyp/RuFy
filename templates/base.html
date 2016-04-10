@@ -79,12 +79,12 @@
               </ul>
 
 			  
-			<form class="navbar-form navbar-right inline-form">
+			<div class="navbar-form navbar-right inline-form">
             
-			<input  id="champs" class="input-sm form-control" size="35" placeholder="Recherche d'un torrent ..." >
+			<input  id="champs" onKeyPress="if (event.keyCode == 13) recherche()" class="input-sm form-control" size="35" placeholder="Recherche d'un torrent ..." >
 			<button type="button" class="btn btn-primary btn-sm" id="btn-search">{% bootstrap_icon "search" %} Chercher</button>
             
-            </form>
+            </div>
 		  
     </form>
 		</div>
