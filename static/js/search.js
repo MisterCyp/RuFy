@@ -86,4 +86,15 @@ $(function () {
     });
 });
 
+$(function () { 
+$('#'+$('#select_cat').val()).show();
+    
+$( "#select_cat" ).change(function() {
+  $('.sub-cat').each(function () {
+    $(this).hide()
+    });
+    
+  $('#'+$(this).val()).show();
+});
 
+});

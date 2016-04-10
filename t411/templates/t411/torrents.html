@@ -6,9 +6,13 @@
 <script type="text/javascript" src="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.js"></script>
 {% endblock %}
 {% block content %}
-{% block titre %}
- <h1>Top {{ type_top}} </h1>
- {% endblock %}
+    {% block search %}
+    {% endblock %}
+    
+    {% block titre %}
+     <h1>Top {{ type_top}} </h1>
+     {% endblock %}
+     
  <div id="btns-categories"> 
 {% for cat in btnCat %}
     {% bootstrap_button cat button_type="button" name=cat|stripspace|stripaccents button_class="btn-primary" %}

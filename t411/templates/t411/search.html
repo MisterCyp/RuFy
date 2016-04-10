@@ -1,4 +1,80 @@
 {% extends "t411/torrents.html" %}
-{% block titre %}
- <h1>Résultat de la recherche : {{ search }} </h1>
+
+{% block search %}
+ <h1>Rechercher un Torrent</h1>
+ 
+ <form method="post" action="{% url "t411:asearch" %}" class="form-horizontal">
+ {% csrf_token %}
+<fieldset>
+
+
+<!-- Search input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="searchinput">Nom</label>
+  <div class="col-md-4">
+    <input id="searchinput" name="searchinput" type="search" placeholder="Votre Recherche" class="form-control input-md" value="{{ search }}">
+    
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="select_cat">Catégorie</label>
+  <div class="col-md-4">
+    <select id="select_cat" name="select_cat" class="cat form-control">
+    
+    {% for cat in list_cat %}
+       {% if cat.pid == pid %}
+      <option value="{{ cat.pid }}" selected="selected"> {{ cat.nom }} </option>
+      {% else %}
+      <option value="{{ cat.pid }}" > {{ cat.nom }} </option>
+      {% endif %}
+    {% endfor %}
+    
+    </select>
+  </div>
+</div>
+
+<!-- Select Basic -->
+
+{% for cat in list_cat %}
+
+{% if cat.souscategorie_set.all %}
+      
+<div id="{{ cat.pid }}" class="sub-cat form-group" style="display:none">
+  <label class="col-md-4 control-label" for="select_sub_cat">Sous-Catégorie</label>
+  <div class="col-md-4">
+    <select id="select_sub_cat{{ cat.pid }}" name="select_sub_cat{{ cat.pid }}" class="form-control">
+    {% for scat in cat.souscategorie_set.all %}
+      {% if scat.cid == cid %}
+      <option value="{{ scat.cid }}" selected="selected">{{ scat.nom }}</option>
+      {% else %}
+      <option value="{{ scat.cid }}">{{ scat.nom }}</option>
+      {% endif %}
+    {% endfor %}
+    </select>
+  </div>
+</div>
+{% endif %}
+    {% endfor %}
+    
+
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="btn_search_accurate"></label>
+  <div class="col-md-4">
+    <button id="btn_search_accurate" name="btn_search_accurate" class="btn btn-primary">Rechercher</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+
  {% endblock %}
+
+{% block titre %}
+    {% if search %}
+     <h1>Résultat de la recherche : {{ search }} </h1>
+    {% endif %}
+{% endblock %}
