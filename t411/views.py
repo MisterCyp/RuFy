@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 
 from t411.forms import ConnexionForm, T411Form, DossierForm, MenuForm
-from t411.models import Profil,T411, Menu
+from t411.models import Profil,T411, Menu, Categorie
 
 from django.forms import modelformset_factory, inlineformset_factory
 
@@ -157,13 +157,44 @@ def search(request,search):
     t411, utilisateur = connexionT411(request)
     
     torrents = t411.search(search,{'limit':200})
-    torrents=torrents['torrents']
     
     if 'error' in torrents:
         return configT411(request,True,torrents['error'])
     else :
+        torrents=torrents['torrents']
         categories,btnCat = mise_en_forme(torrents)
+        list_cat = Categorie.objects.all()
         
+    pid = 1 # categorie tous par defaut
+    
+    return render(request, 't411/search.html',locals())
+ 
+@login_required
+def asearch(request):
+
+    t411, utilisateur = connexionT411(request)
+    
+    pid = 1 # categorie tous par defaut
+    
+    if(request.method=="POST"):
+        search = request._post['searchinput']
+        pid = int(request._post['select_cat'])
+        
+        if pid != 1 :
+            subcat='select_sub_cat'+str(pid)
+            cid = int(request._post[subcat])
+           
+            torrents = t411.search(search,{'limit':200,'cid':cid})
+        else : torrents = t411.search(search,{'limit':200})
+    
+        if 'error' in torrents:
+            return configT411(request,True,torrents['error'])
+        else :
+            torrents=torrents['torrents']
+            categories,btnCat = mise_en_forme(torrents)
+            
+        
+    list_cat = Categorie.objects.all()   
     return render(request, 't411/search.html',locals())
     
 @login_required
@@ -206,13 +237,7 @@ def mise_en_forme(torrents):
         torrent['added'] = str(duree_ecoulee(torrent['added']))
         if torrent['categoryname'] in categories:
             categories[torrent['categoryname']].append(torrent)
-        else: categories[torrent['categoryname']] = [torrent]
-    i=0    
-    # for key in categories.keys():
-            # categories[key] = sorted(categories[key], key=lambda cat: cat['seeders'])
-            # if i==1:
-                # print(categories[key])
-            # i=1    
+        else: categories[torrent['categoryname']] = [torrent]   
             
     btnCat = sorted(categories.keys())
     return categories,btnCat

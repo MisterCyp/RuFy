@@ -1,20 +1,23 @@
 $(document).ready( function() {
 
     $("#btn-search").click( function(event) {
-        if ($("#champs").val())
-            location.href = Urls['t411:search']($("#champs").val());
+        recherche();
     });
 });
 
 $('div button').click(function() {
 	
-    console.log("click");
     $btn = $(this);
 	var cat = $btn.attr("name");
     cat = "#tab-"+cat;
     $(cat).inertAfter("#btns-categories");
 	
 });
+
+function recherche() {
+    if ($("#champs").val())
+            location.href = Urls['t411:search']($("#champs").val());
+}
 
 $(function () {
 
@@ -86,4 +89,15 @@ $(function () {
     });
 });
 
+$(function () { 
+$('#'+$('#select_cat').val()).show();
+    
+$( "#select_cat" ).change(function() {
+  $('.sub-cat').each(function () {
+    $(this).hide()
+    });
+    
+  $('#'+$(this).val()).show();
+});
 
+});

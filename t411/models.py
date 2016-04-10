@@ -31,7 +31,24 @@ class Menu(models.Model):
     
     def __str__(self):
         return "Menu de {0}. Nom : {1}".format(self.profil,self.nom)
+  
+
+
+class Categorie(models.Model):
+    pid = models.IntegerField()
+    nom = models.CharField(max_length=40,null=True)
+    
+    def __str__(self):
+        return "{0}".format(self.nom.encode('utf-8'))
         
+class SousCategorie(models.Model):
+    pid = models.ForeignKey(Categorie, on_delete=models.CASCADE,null=True)
+    cid = models.IntegerField()
+    nom = models.CharField(max_length=40, null=True)
+    
+    def __str__(self):
+        return "{0}".format(self.nom.encode('utf-8'))
+
 HTTP_OK = 200
 API_URL = 'http://api.t411.ch/%s'
 
@@ -120,9 +137,8 @@ class T411(Profil):
         for cle, valeur in options.items():
             criteres += cle+"="+str(valeur)+"&"
         criteres = criteres[:-1]
-        
         requete = search + criteres
-        print(requete)
+        
         return self.call('/torrents/search/%s' %requete)
     
     def extraire(self,fonction = "top100" ,category="Film",limit=10,seedersMin = 0):
