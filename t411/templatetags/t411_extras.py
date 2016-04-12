@@ -44,3 +44,15 @@ def div(nb1,nb2):
     return "%.2f" %(nb1/nb2)
     
 register.filter("div", div)
+
+def sub(nb1,nb2):
+    nb1,nb2 = float(nb1), float(nb2) 
+    return "%.f" %(nb1-nb2)
+    
+register.filter("sub", sub)
+
+def mult(nb1,nb2):
+    nb1,nb2 = float(nb1), float(nb2) 
+    return "%.f" %(nb1*nb2)
+    
+register.filter("mult", mult)

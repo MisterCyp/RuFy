@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
 {% load t411_extras %}
+
 {% block head %}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.css"/>
 <script type="text/javascript" src="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.js"></script>
@@ -13,6 +14,8 @@
      <h1>Top {{ type_top}} </h1>
      {% endblock %}
      
+     {% block pagination %}{% endblock %}
+    
  <div id="btns-categories"> 
 {% for cat in btnCat %}
     {% bootstrap_button cat button_type="button" name=cat|stripspace|stripaccents button_class="btn-primary" %}
@@ -22,7 +25,11 @@
 
 {% for cat , torrents in categories.items %}
 <div id="tab-{{ cat|stripspace|stripaccents }}">
-    <h2> {{ cat }} </h2>
+    {% if search %}
+    <h2><a href="{% url "t411:search" search torrents.0.category %}">{% bootstrap_icon "search"  %}</a> {{ cat }} </h2>
+    {% else %}
+     <h2><a href="{% url "t411:search" " " torrents.0.category %}">{% bootstrap_icon "search"  %}</a> {{ cat }} </h2>
+    {% endif %}
     
 <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" >
         <thead> 
