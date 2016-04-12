@@ -1,9 +1,10 @@
 {% extends "t411/torrents.html" %}
+{% load t411_extras %}
 
 {% block search %}
  <h1>Rechercher un Torrent</h1>
  
- <form method="post" action="{% url "t411:asearch" %}" class="form-horizontal">
+ <form method="post" action="{% url "t411:search" %}" class="form-horizontal">
  {% csrf_token %}
 <fieldset>
 
@@ -72,9 +73,39 @@
 </form>
 
  {% endblock %}
+ 
 
-{% block titre %}
-    {% if search %}
-     <h1>Résultat de la recherche : {{ search }} </h1>
-    {% endif %}
-{% endblock %}
+    {% block titre %}
+        {% if search %}
+             <h1>Résultat de la recherche : {{ search }} </h1>
+             <h2>Torrents trouvés : {{ nbResultats }} </h2>
+        {% endif %}
+    {% endblock %}
+
+    {% block pagination %}
+        {% if index %}
+            <div class="row" style="text-align:center">
+                        <ul class="pagination">
+                        <li><a href="{% url "t411:search" search cid 1 %}">&laquo;</a></li>
+                        
+                        {% for i in pages %}
+                            {% if i == page %}
+                                <li class="active" ><a href="{% url "t411:search" search cid i %}"> {{ i }} </a></li>
+                            {% else %}
+                                <li><a href="{% url "t411:search" search cid i %}"> {{ i }} </a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if pagemax|add:2 < nb_pages_total %}
+                            <li><a>...</a></li>
+                            <li><a href="{% url "t411:search" search cid nb_pages_total %}">{{ nb_pages_total }}</a></li>
+                        {% elif pagemax|add:1 == nb_pages_total %}
+                            <li><a href="{% url "t411:search" search cid nb_pages_total %}">{{ nb_pages_total }}</a></li>
+                        {% elif pagemax|add:2 == nb_pages_total %}
+                            <li><a href="{% url "t411:search" search cid nb_pages_total|sub:1 %}">{{ nb_pages_total|sub:1 }}</a></li>
+                            <li><a href="{% url "t411:search" search cid nb_pages_total %}">{{ nb_pages_total }}</a></li>
+                        {% endif %}
+                        <li><a href="{% url "t411:search" search cid nb_pages_total %}" >&raquo;</a></li>
+                    </ul>
+            </div>
+        {% endif %}
+     {% endblock %}

@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 
 from t411.forms import ConnexionForm, T411Form, DossierForm, MenuForm
-from t411.models import Profil,T411, Menu, Categorie
+from t411.models import Profil,T411, Menu, Categorie,SousCategorie
 
 from django.forms import modelformset_factory, inlineformset_factory
 
@@ -152,51 +152,61 @@ def detail_torrent(request,id_torrent):
     
 
 @login_required
-def search(request,search):
-
+def search(request,search="",cid = 1, page=1):
+    
+    page = int(page)
+    cid = int(cid)
+    search = search.strip()
+    
     t411, utilisateur = connexionT411(request)
     
-    torrents = t411.search(search,{'limit':200})
+    nbTorrents_par_page = 200
+    offset = nbTorrents_par_page*(page-1)
     
-    if 'error' in torrents:
-        return configT411(request,True,torrents['error'])
-    else :
-        torrents=torrents['torrents']
-        categories,btnCat = mise_en_forme(torrents)
-        list_cat = Categorie.objects.all()
-        
-    pid = 1 # categorie tous par defaut
+    options = {'limit':nbTorrents_par_page,'offset':offset}
     
-    return render(request, 't411/search.html',locals())
- 
-@login_required
-def asearch(request):
+    if cid != 1 : 
+            pid = SousCategorie.objects.get(cid = cid).pid.pid
+            options['cid'] = cid
+    else : pid = 1 # categorie tous par defaut
 
-    t411, utilisateur = connexionT411(request)
-    
-    pid = 1 # categorie tous par defaut
-    
     if(request.method=="POST"):
-        search = request._post['searchinput']
-        pid = int(request._post['select_cat'])
+        search = request.POST['searchinput']
+            
+    if search !="" :
+       
+        if(request.method=="POST"):
+            pid = int(request.POST['select_cat'])
+            
+            if pid != 1 :
+                subcat='select_sub_cat'+str(pid)
+                cid = int(request.POST[subcat])
+                options['cid'] = cid
         
-        if pid != 1 :
-            subcat='select_sub_cat'+str(pid)
-            cid = int(request._post[subcat])
-           
-            torrents = t411.search(search,{'limit':200,'cid':cid})
-        else : torrents = t411.search(search,{'limit':200})
-    
+        torrents = t411.search(search,options)
+        
         if 'error' in torrents:
             return configT411(request,True,torrents['error'])
-        else :
+        else :       
+            nbResultats = int(torrents['total'])
+            nb_pages_total = int(-floor(-nbResultats/nbTorrents_par_page))
+            if nb_pages_total > 1 :
+                index = page - 3
+                if index < 1 : index = 1
+                pagemax = index + 5
+                if pagemax > nb_pages_total : pagemax = nb_pages_total
+                pages = range(index,pagemax+1)
             torrents=torrents['torrents']
             categories,btnCat = mise_en_forme(torrents)
             
-        
-    list_cat = Categorie.objects.all()   
+    list_cat = Categorie.objects.all()
     return render(request, 't411/search.html',locals())
-    
+ 
+@login_required
+def getsearch(request,search):
+
+    return redirect(reverse('t411:search',args=[search,1,1]))
+       
 @login_required
 def download(request,id_torrent):
     
