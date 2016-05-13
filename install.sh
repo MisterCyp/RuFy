@@ -79,8 +79,8 @@ echo "
 #####           Copie de la base de donnée initiale                    ####
 ###########################################################################
 "
-
-cp ${INSTALLDIR}/config/db-init.sqlite3 ${INSTALLDIR}/db/db.sqlite3
+mkdir -v ${INSTALLDIR}/db
+cp -v ${INSTALLDIR}/config/db-init.sqlite3 ${INSTALLDIR}/db/db.sqlite3
 
 echo "
 ###########################################################################
