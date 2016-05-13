@@ -2,7 +2,11 @@
 Web-application to download T411 Tracker's torrents from your seedbox
 
 ## Installation
+### Via Docker
 
+See https://github.com/MisterCyp/dockerfiles/tree/master/rufy
+
+### Directly
 You have to be connected in Root :
 
 ```sh
