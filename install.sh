@@ -80,7 +80,7 @@ echo "
 ###########################################################################
 "
 
-cp ${INSTALLDIR}/config/db-init.sqlite3 ${INSTALLDIR}/db.sqlite3
+cp ${INSTALLDIR}/config/db-init.sqlite3 ${INSTALLDIR}/db/db.sqlite3
 
 echo "
 ###########################################################################
