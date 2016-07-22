@@ -23,7 +23,7 @@
 </div>
  
 
-{% for cat , torrents in categories.items %}
+{% for cat , torrents in categories %}
 <div id="tab-{{ cat|stripspace|stripaccents }}">
     {% if search %}
     <h2><a href="{% url "t411:search" search torrents.0.category %}">{% bootstrap_icon "search"  %}</a> {{ cat }} </h2>

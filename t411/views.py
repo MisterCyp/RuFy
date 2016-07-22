@@ -250,6 +250,10 @@ def mise_en_forme(torrents):
         else: categories[torrent['categoryname']] = [torrent]   
             
     btnCat = sorted(categories.keys())
+    
+    categories = categories.items()
+    categories = sorted(categories, key=lambda x: x[0])
+    
     return categories,btnCat
            
 def duree_ecoulee(date_from):
