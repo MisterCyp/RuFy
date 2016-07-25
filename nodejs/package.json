@@ -1,0 +1,23 @@
+{
+  "name": "rufy",
+  "version": "1.0.0",
+  "description": "Nodejs Backend for Rufy, able to stream torrent from t411 and from server directly into the browser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "torrent",
+    "t411",
+    "rufy"
+  ],
+  "author": "shyne",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "fs-extra": "^0.30.0",
+    "tap": "^6.2.0",
+    "torrent-stream": "^1.0.3"
+  }
+}

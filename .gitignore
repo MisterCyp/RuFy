@@ -1,7 +1,8 @@
 /**/*/__pycache__
 log/
 venv/
-
+nodejs/node_modules
+nodejs/assets
 *.py[cod]
 db.sqlite3
 
