@@ -9,8 +9,11 @@ from t411.forms import ConnexionForm, T411Form, DossierForm, MenuForm
 from t411.models import Profil,T411, Menu, Categorie,SousCategorie
 
 from django.forms import modelformset_factory, inlineformset_factory
-
+import bencode
+import hashlib
 import json
+import base64
+import urllib
 import time, datetime
 from math import floor
 def connexion(request):
@@ -149,9 +152,45 @@ def detail_torrent(request,id_torrent):
         return configT411(request,True,detail['error'])
         
     return render(request, 't411/detail_torrents.html',locals())
-    
 
 @login_required
+def stream_torrent(request, id_torrent):
+    t411, utilisateur = connexionT411(request)
+    if t411.profil.dossier_temp == "" or t411.profil.dossier_temp == None:
+        return HttpResponse("dossier")
+    else:
+        dossier = t411.profil.dossier_temp
+
+    fichier = t411.download(id_torrent)
+    torrent = fichier.content
+    throw
+    if 'error' in fichier:
+        return HttpResponse(fichier['error'])
+
+    nomFichier = fichier.headers['Content-Disposition'].split('=')[1][1:-1]
+    nomFichier = nomFichier.decode('cp1252')
+
+    chemin = dossier + nomFichier
+    chemin = chemin.encode('utf8')
+
+
+#   with open(chemin, 'wb') as fd:
+#       for chunk in fichier.iter_content():
+#           fd.write(chunk)
+
+#   torrent = open(chemin, 'r').read()
+#   metadata = bencode.bdecode(torrent)
+#   hashcontents = bencode.bencode(metadata['info'])
+#   digest = hashlib.sha1(hashcontents).digest()
+#   b32hash = base64.b32encode(digest)
+
+#    params = {'xt': 'urn:btih:%s' % b32hash, 'dn': metadata['info']['name'], 'tr': metadata['announce'], 'xl' : metadata['info']['length']}
+#    paramstr = urllib.urlencode(params)
+#   magneturi = 'magnet:?%s' % paramstr
+
+    return render(request, 't411/stream_torrent.html', locals())
+@login_required
+
 def search(request,search="",cid = 1, page=1):
     
     page = int(page)

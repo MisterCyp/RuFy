@@ -5,5 +5,5 @@ nodejs/node_modules
 nodejs/assets
 *.py[cod]
 db.sqlite3
-
+*.torrent
 config/rufy_SUPERVISOR.conf

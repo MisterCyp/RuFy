@@ -14,7 +14,8 @@ from requests.auth import HTTPDigestAuth
 class Profil(models.Model):
     user = models.OneToOneField(User)  # La liaison OneToOne vers le modèle User
     dossier = models.CharField(max_length=200,null=True, blank = True)
-    
+    dossier_temp = models.CharField(max_length=200,null=True, blank = True)
+
     pseudoT411 = models.CharField(max_length=42,null=True)
     uid = models.IntegerField(null=True)
     token = models.CharField(max_length=50,null=True)

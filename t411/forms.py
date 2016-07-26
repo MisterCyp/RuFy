@@ -13,6 +13,7 @@ class ConfigForm(forms.Form):
     username = forms.CharField(label="Nom d'utilisateur T411")
     password = forms.CharField(label="Mot de passe (non stocké)", widget=forms.PasswordInput)
     dossier  = forms.CharField(label="Dossier blackhole Rutorrent")
+    dossier_temp = forms.CharField(label="Dossier temporaire de streaming")
     
 class T411Form(forms.ModelForm):
     class Meta:
@@ -24,9 +25,10 @@ class T411Form(forms.ModelForm):
 class DossierForm(forms.ModelForm):
     class Meta:
         model = Profil
-        fields = ('dossier',)
+        fields = ('dossier', 'dossier_temp')
         widgets = {
             'dossier': TextInput(attrs={'size': 80}),
+            'dossier_temp': TextInput(attrs={'size': 80})
         }
         
 class MenuForm(forms.ModelForm):
