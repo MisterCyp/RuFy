@@ -13,7 +13,7 @@ import bencode
 import hashlib
 import json
 import base64
-import urllib
+import urllib, requests
 import time, datetime
 from math import floor
 def connexion(request):
@@ -156,6 +156,7 @@ def detail_torrent(request,id_torrent):
 @login_required
 def stream_torrent(request, id_torrent):
     t411, utilisateur = connexionT411(request)
+    #detail = t411.details(id_torrent)
     if t411.profil.dossier_temp == "" or t411.profil.dossier_temp == None:
         return HttpResponse("dossier")
     else:
@@ -163,7 +164,7 @@ def stream_torrent(request, id_torrent):
 
     fichier = t411.download(id_torrent)
     torrent = fichier.content
-    throw
+
     if 'error' in fichier:
         return HttpResponse(fichier['error'])
 
@@ -174,10 +175,16 @@ def stream_torrent(request, id_torrent):
     chemin = chemin.encode('utf8')
 
 
-#   with open(chemin, 'wb') as fd:
-#       for chunk in fichier.iter_content():
-#           fd.write(chunk)
 
+
+    with open(chemin, 'wb') as fd:
+        for chunk in fichier.iter_content():
+            fd.write(chunk)
+
+   # r = requests.post("http://localhost:3000/streamtorrent", data={'torrent': chemin})
+   # status = r.status_code
+   # if r.status_code != 200:
+    #    throw
 #   torrent = open(chemin, 'r').read()
 #   metadata = bencode.bdecode(torrent)
 #   hashcontents = bencode.bencode(metadata['info'])

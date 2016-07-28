@@ -17,7 +17,11 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "fs-extra": "^0.30.0",
+    "http": "0.0.0",
+    "mkdirp": "^0.5.1",
+    "socket.io": "^1.4.8",
     "tap": "^6.2.0",
-    "torrent-stream": "^1.0.3"
+    "torrent-stream": "^1.0.3",
+    "webtorrent": "^0.95.5"
   }
 }

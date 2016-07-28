@@ -1,5 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
- <h3>Test</h3>
-<p> {{ torrent|safe }}</p>
+ <h3>Streaming torrent</h3>
+<p>
+
+
+<center>
+    <script>
+        $(document).ready(function () {
+            var api = 'http://localhost:3000/';
+            var video = document.querySelector('#player');
+             plyr.setup(video);
+            $.post(api + 'streamtorrent/add', { torrent : "{{ chemin }}", id : {{ id_torrent }} }).done( function( data ){
+                    setTimeout(function(){
+                        var video = api + 'streamtorrent/' + '{{id_torrent}}' + '.mp4';
+                        $('video').attr('src', video);
+                        $('.input').hide();
+                        $('.video').show();
+                    }, 2000);
+            } );
+        });
+
+        video.play();
+
+    </script>
+
+
+  <div class="container">
+
+        <div class="video" style="display:none">
+            <video autoplay preload="none" controls crossorigin id="player" type="video/mp4" src="" style="background:black"></video>
+            <br>
+            <button class="stop">Stop</button>
+        </div>
+  </div>
+</center>
+<script src="https://cdn.plyr.io/1.8.12/plyr.js"></script>
+
 {% endblock %}
