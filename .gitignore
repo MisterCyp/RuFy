@@ -7,3 +7,4 @@ nodejs/assets
 db.sqlite3
 *.torrent
 config/rufy_SUPERVISOR.conf
+static/assets
