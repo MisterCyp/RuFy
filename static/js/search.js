@@ -68,7 +68,10 @@ $(function () {
  
 														},
           error : function(resultat, statut, erreur){
-                                                        alert("La SeedBox ne répond pas !")
+							console.log(resultat);
+							console.log(statut);
+							console.log(erreur);
+                                                        alert("La SeedBox ne repond pas !")
 
 														},
           complete : function(resultat, statut){
