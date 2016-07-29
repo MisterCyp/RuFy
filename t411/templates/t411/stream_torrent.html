@@ -6,10 +6,10 @@
 
 <center>
     <script>
-        $(document).ready(function () {
+        $(window).load(function () {
             var api = 'http://localhost:3000/';
             var video = document.querySelector('#player');
-             plyr.setup(video);
+            plyr.setup(video);
             $.post(api + 'streamtorrent/add', { torrent : "{{ chemin }}", id : {{ id_torrent }} }).done( function( data ){
                     setTimeout(function(){
                         var video = api + 'streamtorrent/' + '{{id_torrent}}' + '.mp4';
@@ -17,7 +17,7 @@
                         $('.input').hide();
                         $('.video').show();
                     }, 2000);
-            } );
+            });
         });
         $(window).unload(function() {
             var id = {{ id_torrent }};

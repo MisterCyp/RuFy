@@ -5,6 +5,7 @@ var http = require('http');
 var app = express();
 var bodyParser = require("body-parser");
 var fs = require('fs');
+
 var port = 3000;
 
 var client = new webtorrent();
@@ -55,7 +56,6 @@ app.post('/streamtorrent/add', function(request, response, next) {
             listOfTorrents.id =  request.body.torrent;
             response.status(200).send('Added torrent!');
         });
-
        console.log("Torrent added");
     }
     catch (err) {
@@ -85,7 +85,6 @@ app.get('/streamtorrent/:id.mp4', function(request, response){
         } else {
             var start = 0; var end = total;
         }
-
         var stream = file.createReadStream({start: start, end: end});
         response.writeHead(206, { 'Content-Range': 'bytes ' + start + '-' + end + '/' + total, 'Accept-Ranges': 'bytes', 'Content-Length': chunksize, 'Content-Type': 'video/mp4' });
         stream.pipe(response);
@@ -115,4 +114,5 @@ var server = http.createServer(app);
 server.listen(port, function() {
     console.log('Listening on http://127.0.0.1:' + port);
 });
+
 
