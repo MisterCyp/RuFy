@@ -7,7 +7,9 @@
 <center>
     <script>
         $(window).load(function () {
-            var api = 'http://' + {{ip_adress}} + ':3000/';
+
+            var ip = '{{ ip_address }}';
+            var api = 'http://' + ip + ':3000/';
             var video = document.querySelector('#player');
             plyr.setup(video);
             $.post(api + 'streamtorrent/add', { torrent : "{{ chemin }}", id : {{ id_torrent }} }).done( function( data ){
@@ -21,7 +23,8 @@
         });
         $(window).unload(function() {
             var id = {{ id_torrent }};
-            var api = 'http://localhost:3000/';
+            var ip = '{{ ip_address }}';
+            var api = 'http://' + ip + ':3000/';
             $.get(api + 'delete/' + id).done(function(data){
                 console.log("removed torrent");
             });
