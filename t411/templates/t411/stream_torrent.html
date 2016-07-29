@@ -7,7 +7,7 @@
 <center>
     <script>
         $(window).load(function () {
-            var api = 'http://localhost:3000/';
+            var api = 'http://' + {{ip_adress}} + ':3000/';
             var video = document.querySelector('#player');
             plyr.setup(video);
             $.post(api + 'streamtorrent/add', { torrent : "{{ chemin }}", id : {{ id_torrent }} }).done( function( data ){

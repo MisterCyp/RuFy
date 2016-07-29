@@ -9,7 +9,7 @@ from t411.forms import ConnexionForm, T411Form, DossierForm, MenuForm
 from t411.models import Profil,T411, Menu, Categorie,SousCategorie
 
 from django.forms import modelformset_factory, inlineformset_factory
-import bencode
+import socket
 import hashlib
 import json
 import base64
@@ -180,6 +180,9 @@ def stream_torrent(request, id_torrent):
     with open(chemin, 'wb') as fd:
         for chunk in fichier.iter_content():
             fd.write(chunk)
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(('8.8.8.8', 0))  # connecting to a UDP address doesn't send packets
+    ip_address = s.getsockname()[0]
 
    # r = requests.post("http://localhost:3000/streamtorrent", data={'torrent': chemin})
    # status = r.status_code
