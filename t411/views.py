@@ -194,6 +194,7 @@ def stream_torrent(request, id_torrent):
 #    params = {'xt': 'urn:btih:%s' % b32hash, 'dn': metadata['info']['name'], 'tr': metadata['announce'], 'xl' : metadata['info']['length']}
 #    paramstr = urllib.urlencode(params)
 #   magneturi = 'magnet:?%s' % paramstr
+# Les magnets ne supportent pas le DHT, d'ou l'abandon. Dans le cas du magnet, cela fonctionne mais le ratio n'est pas comptabilisé par le tracker de T411.
 
     return render(request, 't411/stream_torrent.html', locals())
 @login_required

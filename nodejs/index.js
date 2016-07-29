@@ -85,13 +85,29 @@ app.get('/streamtorrent/:id.mp4', function(request, response){
         } else {
             var start = 0; var end = total;
         }
-        
+
         var stream = file.createReadStream({start: start, end: end});
         response.writeHead(206, { 'Content-Range': 'bytes ' + start + '-' + end + '/' + total, 'Accept-Ranges': 'bytes', 'Content-Length': chunksize, 'Content-Type': 'video/mp4' });
         stream.pipe(response);
     } catch (err) {
         response.status(500).send('Error: ' + err.toString());
         console.log('getting stream failed' + err.toString());
+    }
+});
+
+app.get('/delete/:id', function(request, response){
+    console.log(listOfTorrents);
+    if(request.params.id =='undefined' || request.params.id == ''){
+        response.status(500).send('Missing torrent ID in your request'); return;
+    }
+    try {
+        var id = request.params.id;
+        var torrent = client.remove(fs.readFileSync(listOfTorrents.id));
+        console.log('Removed torrent' + listOfTorrents.id)
+        response.status(200).send('Removed torrent ' + listOfTorrents.id);
+    } catch( err ) {
+        response.status(500).send('Error : ' + err.toString() + listOfTorrents.id);
+        console.log('Removing torrent error : ' + err.toString());
     }
 });
 

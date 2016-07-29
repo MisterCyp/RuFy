@@ -19,7 +19,13 @@
                     }, 2000);
             } );
         });
-
+        $( window).unload(function() {
+            var id = {{ id_torrent }};
+            var api = 'http://localhost:3000/';
+            $.get(api + 'delete/' + id).done(function(data){
+                console.log("removed torrent");
+            });
+        });
         video.play();
 
     </script>
