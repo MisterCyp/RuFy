@@ -23,7 +23,7 @@ URI = "/rufy" #exemple URI = "/rufy" attention au slash(/) ne pas en ajouter à 
 SECRET_KEY = '_nz^-9its$w6e97)c2$b#8!e8pon@nl*!jw-q&s)fhrqj&8y%h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
