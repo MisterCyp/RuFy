@@ -39,8 +39,14 @@ var getLargestFile = function(torrent) {
 var torrentID;
 app.post('/streamtorrent/add', function(request, response, next) {
     try {
+
         if(!request.body.torrent || !request.body.id ){
             response.status(500).send('Missing torrent info in request!'); return;
+        }
+        var id = request.body.id;
+        if(listOfTorrents.id !== undefined) {
+            console.log("torrent not added, because it seems to already exist");
+            response.status(200).send("torrent already exists, skipping..."); return;
         }
         torrentID = fs.readFileSync(request.body.torrent);
         client.add(torrentID, function(torrent){
@@ -49,6 +55,7 @@ app.post('/streamtorrent/add', function(request, response, next) {
                 if(torrent.length == torrent.downloaded) {
                     torrent.swarm.destroy();
                     torrent.discovery.stop();
+                    delete listOfTorrents.id;
                 }
 
             });
@@ -102,7 +109,8 @@ app.get('/delete/:id', function(request, response){
     try {
         var id = request.params.id;
         var torrent = client.remove(fs.readFileSync(listOfTorrents.id));
-        console.log('Removed torrent' + listOfTorrents.id)
+        console.log('Removed torrent' + listOfTorrents.id);
+        delete listOfTorrents.id;
         response.status(200).send('Removed torrent ' + listOfTorrents.id);
     } catch( err ) {
         response.status(500).send('Error : ' + err.toString() + listOfTorrents.id);
