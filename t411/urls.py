@@ -18,5 +18,5 @@ urlpatterns = [
     url(r'^search/(?P<search>[\w\ ]+)/$', views.search, name='search'),
     url(r'^search/(?P<search>[\w\ ]+)/(?P<cid>\d+)$', views.search, name='search'),
     url(r'^search/(?P<search>[\w\ ]+)/(?P<cid>\d+)/(?P<page>\d+)$', views.search, name='search'),
-    url(r'^download/(?P<id_torrent>\d+)$', views.download, name='download'),
+    url(r'^download/(?P<id_torrent>\d+)-(?P<cid>\d+)$', views.download, name='download'),
 ]

@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 
 from t411.forms import ConnexionForm, T411Form, DossierForm, MenuForm
-from t411.models import Profil,T411, Menu, Categorie,SousCategorie
+from t411.models import Profil, T411, Menu, Categorie, SousCategorie, Folder
 
 from django.forms import modelformset_factory, inlineformset_factory
 
@@ -27,6 +27,8 @@ def connexion(request):
             if user:  # Si l'objet renvoyé n'est pas None
                 login(request, user)  # nous connectons l'utilisateur 
                 t411, utilisateur = connexionT411(request)
+                creationDossiersRutorrent(utilisateur)
+                
                 if utilisateur.token=="" : return configT411()
                 t411.get_info()
             else: # sinon une erreur sera affichée
@@ -208,12 +210,13 @@ def getsearch(request,search):
     return redirect(reverse('t411:search',args=[search,1,1]))
        
 @login_required
-def download(request,id_torrent):
-    
+def download(request,id_torrent,cid):
+
     t411, utilisateur = connexionT411(request)
-    if t411.profil.dossier == "" or t411.profil.dossier == None :
+    if utilisateur.dossier == "" or utilisateur.dossier == None :
         return HttpResponse("dossier")
-    else: dossier = t411.profil.dossier  
+    else: 
+        dossier = utilisateur.dossier + utilisateur.folder_set.filter(cid = cid)[0].dossier + "/"
     
     fichier = t411.download(id_torrent)
     
@@ -225,8 +228,7 @@ def download(request,id_torrent):
     
     chemin = dossier+nomFichier 
     chemin = chemin.encode('utf8')
-    
-        
+      
     with open(chemin, 'wb') as fd:
         for chunk in fichier.iter_content():
             fd.write(chunk)
@@ -274,3 +276,14 @@ def duree_ecoulee(date_from):
         else : diff_day = "%.f"%floor(timedelta.seconds/3600)+" heures"
 
         return diff_day
+
+def creationDossiersRutorrent(profil):
+    subcats = SousCategorie.objects.all()
+
+    for subcat in subcats:
+        
+        folder,created = Folder.objects.get_or_create(profil = profil, cid = subcat.cid)
+        
+        if created:
+            folder.dossier = ""
+            folder.save()
