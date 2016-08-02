@@ -183,7 +183,6 @@ def stream_torrent(request, id_torrent):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(('8.8.8.8', 0))  # connecting to a UDP address doesn't send packets
     ip_address = s.getsockname()[0]
-
    # r = requests.post("http://localhost:3000/streamtorrent", data={'torrent': chemin})
    # status = r.status_code
    # if r.status_code != 200:
