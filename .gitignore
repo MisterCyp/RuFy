@@ -10,3 +10,6 @@ db.sqlite3
 config/rufy_SUPERVISOR.conf
 static/assets
 assets/
+.bash_history
+.cache/
+.idea/
