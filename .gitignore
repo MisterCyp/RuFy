@@ -1,8 +1,15 @@
 /**/*/__pycache__
 log/
 venv/
-
+nodejs/node_modules
+nodejs/assets
+nodejs/pid
 *.py[cod]
 db.sqlite3
-
+*.torrent
 config/rufy_SUPERVISOR.conf
+static/assets
+assets/
+.bash_history
+.cache/
+.idea/

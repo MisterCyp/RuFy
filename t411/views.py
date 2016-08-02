@@ -9,8 +9,11 @@ from t411.forms import ConnexionForm, T411Form, DossierForm, MenuForm
 from t411.models import Profil,T411, Menu, Categorie,SousCategorie
 
 from django.forms import modelformset_factory, inlineformset_factory
-
+import socket
+import hashlib
 import json
+import base64
+import urllib, requests
 import time, datetime
 from math import floor
 def connexion(request):
@@ -149,9 +152,55 @@ def detail_torrent(request,id_torrent):
         return configT411(request,True,detail['error'])
         
     return render(request, 't411/detail_torrents.html',locals())
-    
 
 @login_required
+def stream_torrent(request, id_torrent):
+    t411, utilisateur = connexionT411(request)
+    #detail = t411.details(id_torrent)
+    if t411.profil.dossier_temp == "" or t411.profil.dossier_temp == None:
+        return HttpResponse("dossier")
+    else:
+        dossier = t411.profil.dossier_temp
+
+    fichier = t411.download(id_torrent)
+    torrent = fichier.content
+
+    if 'error' in fichier:
+        return HttpResponse(fichier['error'])
+
+    nomFichier = fichier.headers['Content-Disposition'].split('=')[1][1:-1]
+    nomFichier = nomFichier.decode('cp1252')
+
+    chemin = dossier + nomFichier
+    chemin = chemin.encode('utf8')
+
+
+
+
+    with open(chemin, 'wb') as fd:
+        for chunk in fichier.iter_content():
+            fd.write(chunk)
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(('8.8.8.8', 0))  # connecting to a UDP address doesn't send packets
+    ip_address = s.getsockname()[0]
+   # r = requests.post("http://localhost:3000/streamtorrent", data={'torrent': chemin})
+   # status = r.status_code
+   # if r.status_code != 200:
+    #    throw
+#   torrent = open(chemin, 'r').read()
+#   metadata = bencode.bdecode(torrent)
+#   hashcontents = bencode.bencode(metadata['info'])
+#   digest = hashlib.sha1(hashcontents).digest()
+#   b32hash = base64.b32encode(digest)
+
+#    params = {'xt': 'urn:btih:%s' % b32hash, 'dn': metadata['info']['name'], 'tr': metadata['announce'], 'xl' : metadata['info']['length']}
+#    paramstr = urllib.urlencode(params)
+#   magneturi = 'magnet:?%s' % paramstr
+# Les magnets ne supportent pas le DHT, d'ou l'abandon. Dans le cas du magnet, cela fonctionne mais le ratio n'est pas comptabilisé par le tracker de T411.
+
+    return render(request, 't411/stream_torrent.html', locals())
+@login_required
+
 def search(request,search="",cid = 1, page=1):
     
     page = int(page)

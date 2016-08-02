@@ -2,7 +2,9 @@
 {% block content %}
  <h3>Détails du torrent : {{ detail.name }} </h3>
  <button class="btn btn-primary" id="btn-download" type="button" value="{{ detail.id}}">Télécharger</button>
-<p> 
+ <a class="btn btn-primary"  href="{% url "t411:stream_torrent" id_torrent %}">Streaming</a>
+
+
     <center><small>{{ detail.description|safe }}</small></center>
 </p>
 

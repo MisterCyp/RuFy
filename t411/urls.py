@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^top/$', views.top_torrents, name='top_torrents'),
     url(r'^top/(?P<type_top>\w+)$', views.top_torrents, name='top_torrents'),
     url(r'^torrent/(?P<id_torrent>\d+)$', views.detail_torrent, name='detail_torrent'),
+    url(r'^torrent/(?P<id_torrent>\d+)/stream$', views.stream_torrent, name='stream_torrent'),
     url(r'^search$', views.search, name='search'),
     url(r'^search/(?P<search>[\w\ ]+)/$', views.search, name='search'),
     url(r'^search/(?P<search>[\w\ ]+)/(?P<cid>\d+)$', views.search, name='search'),

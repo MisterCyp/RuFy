@@ -6,6 +6,7 @@ GROUP=web
 VIRTUALDIR="venv"
 
 mkdir -p ${INSTALLDIR}/log/
+mkdir /var/run/forever
 
 exec 2>${INSTALLDIR}/log/install.log
 
