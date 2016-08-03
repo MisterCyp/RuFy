@@ -38,15 +38,12 @@ $(function () {
     
 $(function () {       
         $('#btn-download').click(function() {
-            
-           // location.href = "/t411/download/"+$(this).attr("value");
+            var arguments = $(this).attr("value").split("-")
                     $.ajax({
-          // chargement du fichier externe monfichier-ajax.php 
-          url      : Urls['t411:download']($(this).attr("value")),
-          // Passage des données au fichier externe (ici le nom cliqué)  
+          url      : Urls['t411:download'](arguments[0],arguments[1]), 
           cache    : false,
           dataType : "text",
-          success : function(reponse, statut){ // code_html contient le HTML renvoyé
+          success : function(reponse, statut){
 												
 															 if($.trim(reponse)=='success')
 															 {

@@ -32,8 +32,6 @@ class Menu(models.Model):
     def __str__(self):
         return "Menu de {0}. Nom : {1}".format(self.profil,self.nom)
   
-
-
 class Categorie(models.Model):
     pid = models.IntegerField()
     nom = models.CharField(max_length=40,null=True)
@@ -49,6 +47,14 @@ class SousCategorie(models.Model):
     def __str__(self):
         return "{0}".format(self.nom.encode('utf-8'))
 
+class Folder(models.Model):
+    profil = models.ForeignKey(Profil, on_delete=models.CASCADE, default=0)
+    dossier = models.CharField(max_length=40,null=True)
+    cid = models.IntegerField()
+
+    def __str__(self):
+        return "{0} : Dossier pour la categorie {1}".format(self.profil, str(self.cid))
+        
 HTTP_OK = 200
 API_URL = 'http://api.t411.ch/%s'
 
