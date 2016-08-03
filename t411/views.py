@@ -48,6 +48,7 @@ def configRut(request,error = False, erreur=""):
     success = False
     
     if request.method == "POST":
+        print(request.POST)
         form = DossierForm(request.POST,instance=utilisateur)
         if form.is_valid():
             profil = form.save(commit=False)
@@ -61,10 +62,33 @@ def configRut(request,error = False, erreur=""):
             
             profil.save()
             success = True
+            
+        for id, value in request.POST.items():
+            try:
+                id = int(id)
+                folders = utilisateur.folder_set.filter(cid=id)
+                for folder in folders:
+                    folder.dossier = value
+                    folder.save()
+            except ValueError:
+                id = id                
     else:
         form = DossierForm(instance=utilisateur)
-
-    return render(request, 't411/config.html', locals())
+        
+    categories = Categorie.objects.all()
+    dictSubCat = {}
+    for categorie in categories:
+        if categorie.nom !="Tous":
+            dictSubCat[categorie.nom] = {}
+            cat = dictSubCat[categorie.nom]
+            for subcat in categorie.souscategorie_set.all():
+                cat[subcat.nom] = {}
+                cat[subcat.nom]["cid"] = subcat.cid
+                cat[subcat.nom]["dossier"] = utilisateur.folder_set.filter(cid=subcat.cid)[0].dossier 
+    dictSubCat = dictSubCat.items()
+    dictSubCat = sorted(dictSubCat, key=lambda x: x[0])
+    
+    return render(request, 't411/configFolders.html', locals())
     
 @login_required      
 def configT411(request, error = False, erreur=""):

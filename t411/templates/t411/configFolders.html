@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block nav %}
+				<li class=""> <a href="{% url "t411:configT411" %}">{% bootstrap_icon "user" %} Compte T411</a> </li>
+                <li class=""> <a href="{% url "t411:configRut" %}">{% bootstrap_icon "download-alt" %} RuTorrent </a> </li>
+                <li><a href="{% url "t411:configMenu" %}">{% bootstrap_icon "list" %} Menu</a></li>
+{% endblock %}
+{% block titre %}
+ <h2> {{ titre }}</h2>
+{% endblock %}
+ {% block content %}
+{% if success %}
+<p> {{ configReussi }} </p>
+{% else %}
+{% if error %}
+<p><strong>Erreur : {{ erreur }}</strong></p>
+{% endif %}
+<form method="post" action="{% url config %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p> Sous Dossier :</p>
+    <ul>
+    {% for categorie, subcats in dictSubCat %}
+                        <li> <h4>{{ categorie}} </h4></li>
+        {% for nom, donnees in subcats.items %}   
+        <label for="{{ donnees.cid }}">{{ nom }}:</label> <input id="{{ donnees.cid }}" maxlength="20" name="{{ donnees.cid }}" size="15" type="text" value="{{ donnees.dossier }}">
+        {% endfor %}
+    {% endfor %}
+    </ul>
+    <input type="submit" value="Sauvegarder" />
+</form>
+{% endif %}
+{% endblock %}
