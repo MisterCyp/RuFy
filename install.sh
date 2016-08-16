@@ -136,7 +136,7 @@ echo "
 Migrations Django
 #####################################
 "
-
+python manage.py collectstatic_js_reverse
 python manage.py makemigrations
 python manage.py migrate
 
