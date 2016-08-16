@@ -38,7 +38,7 @@ $(function () {
     
 $(function () {       
         $('#btn-download').click(function() {
-            var arguments = $(this).attr("value").split("-")
+            var arguments = $(this).attr("value").split("-");
                     $.ajax({
           url      : Urls['t411:download'](arguments[0],arguments[1]), 
           cache    : false,
