@@ -3,11 +3,11 @@
 {% load t411_extras %}
 {% block content %}
 {% if user.is_authenticated %}
-    <h2>Bienvenue sur RuFy 2.0  {{ user.username|majFirst }} !</h2>
+    <h2>Bienvenue sur RuFy {{ user.username|majFirst }} !</h2>
     <p>
-       Pensez à définir votre <a href="{% url "t411:configT411" %}">compte T411 </a> </li> et le <a href="{% url "t411:configRut" %}">dossier </a> </li> de destination des torrents dans l'onglet configuration.
+       Pensez à définir votre <a href="{% url "t411:configT411" %}">compte T411</a> </li> et les <a href="{% url "t411:configRut" %}">dossiers</a> </li> de destination des torrents dans l'onglet configuration.
     </p>
     {% else %}
-     <h2>Bienvenue sur RuFy 2.0 ! </h2>
+     <h2>Bienvenue sur RuFy ! </h2>
     {% endif %}
 {% endblock %}
