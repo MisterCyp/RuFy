@@ -78,28 +78,26 @@ $(function () {
                         });
 });
 
-$(function () {
+$(function () { 
     $('.table').each(function () {
     $(this).DataTable({
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/French.json"
         },
-        "order": [[ 3, "desc" ]],
-        "columnDefs": [
-       { type: 'file-size', targets: 2 },
-        { type: 'date-pub', targets: 1 }
-     ]
+        "order": [[ 3, "desc" ]]
     });
     });
 });
 
 $(function () { 
 $('#'+$('#select_cat').val()).show();
-
+    
 $( "#select_cat" ).change(function() {
   $('.sub-cat').each(function () {
     $(this).hide()
     });
+    
   $('#'+$(this).val()).show();
 });
+
 });
