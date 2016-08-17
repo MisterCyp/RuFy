@@ -35,4 +35,6 @@ exec  ${VIRTUALDIR}/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
   --user=$USER --group=$GROUP \
   --bind=127.0.0.1:${PORTNUMBER} \
   --log-level=debug \
-  --log-file=log/gunicorn.log
+  --log-file=log/gunicorn.log \
+  --limit-request-field_size 0 \
+  --timeout 60
