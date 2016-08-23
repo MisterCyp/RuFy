@@ -26,7 +26,7 @@ class Profil(models.Model):
 
 class Menu(models.Model):
     nom = models.CharField(max_length=15)
-    lien = models.CharField(max_length=50)
+    lien = models.CharField(max_length=500)
     profil = models.ForeignKey(Profil, on_delete=models.CASCADE, default=0)
     
     def __str__(self):
