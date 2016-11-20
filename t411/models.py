@@ -56,7 +56,7 @@ class Folder(models.Model):
         return "{0} : Dossier pour la categorie {1}".format(self.profil, str(self.cid))
         
 HTTP_OK = 200
-API_URL = 'http://api.t411.ch/%s'
+API_URL = 'http://api.t411.li/%s'
 
 class T411(Profil):
     """ Base class for t411 interface """
