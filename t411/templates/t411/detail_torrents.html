@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
  <h3>Détails du torrent : {{ detail.name }} </h3>
- <button class="btn btn-primary" id="btn-download" type="button" value="{{ detail.id}}-{{ detail.category}}">Télécharger</button>
+ <button class="btn btn-primary btn-download" type="button" value="{{ detail.id}}-{{ detail.category}}">Télécharger</button>
 <p> 
     <center><small>{{ detail.description|safe }}</small></center>
 </p>
