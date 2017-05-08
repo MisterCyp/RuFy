@@ -36,6 +36,7 @@
 <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" >
         <thead> 
                  <tr> 
+                 <td>Lien téléchargement</td>
                  <td>Torrent</td> 
                  <td>Age</td> 
                  <td>Taille</td>
@@ -47,6 +48,7 @@
          <tbody> 
             {% for torrent in torrents  %}
                  <tr> 
+                 <td style="width:5%;"><button class="btn btn-primary btn-download" type="button" value="{{ torrent.id}}-{{ torrent.category}}">Télécharger</button></td>
                  <td style="width:65%;"><a href="{% url "t411:detail_torrent" torrent.id %}">{{ torrent.name }}</a></td> 
                  <td style="width:10%;">{{ torrent.added }}</td> 
                  <td style="width:10%;">{{ torrent.size|taille }}</td> 
