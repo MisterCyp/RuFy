@@ -86,8 +86,8 @@ $(function () {
         },
         "order": [[ 3, "desc" ]],
         "columnDefs": [
-       { type: 'file-size', targets: 2 },
-        { type: 'date-pub', targets: 1 }
+       { type: 'file-size', targets: 3 },
+        { type: 'date-pub', targets: 2 }
      ]
     });
     });
